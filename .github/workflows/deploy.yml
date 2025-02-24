@@ -19,20 +19,27 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-2
 
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.3 
+
       - name: Terraform Init
         run: |
-             cd terraform 
-             terraform init
+          cd terraform
+          terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
       - name: Terraform Format
-        run: terraform fmt -check
+        run: |
+          cd terraform
+          terraform fmt -check
 
-    # Generates an execution plan for Terraform
       - name: Terraform Plan
-        run: terraform plan -input=false
+        run: |
+          cd terraform
+          terraform plan -input=false
 
       - name: Deploy with Terraform
-        run: terraform apply -auto-approve -input=false
-          
+        run: |
+          cd terraform
+          terraform apply -auto-approve -input=false
