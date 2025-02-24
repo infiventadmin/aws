@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Globals:
+  Function:
+    Environment:
+      Variables:
+        REDIS_HOST="redis-cluster.amazonaws.com"
+        DB_HOST="database-infivent.cdku6skoiwu0.ap-south-2.rds.amazonaws.com"
+        DB_USER="postgres"
+        DB_PASSWORD="Letsbagp123A"
+        DB_NAME='database_infivent'
+        DB_PORT=5432
+
+Resources:
+  GetUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: getUsersFromPostgres
+      Handler: index.handler
+      Runtime: nodejs20.x
+      CodeUri: lambdas/getUsersFromPostgres/
+      Timeout: 10
+
+  SetUsersFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: setUsersToPostgres
+      Handler: index.handler
+      Runtime: nodejs20.x
+      CodeUri: lambdas/setUsersToPostgres/
+      Timeout: 10

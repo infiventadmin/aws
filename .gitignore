@@ -1,0 +1,45 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# AWS credentials and Terraform state
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Logs and temp files
+logs/
+*.log
+yarn-error.log
+pnpm-debug.log
+debug.log
+*.out
+
+# Lambda build artifacts
+*.zip
+dist/
+build/
+
+# VSCode settings
+.vscode/
+.history/
+.DS_Store
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore JSON responses
+response.json
+
+# Ignore temporary files
+*.swp
+*.swo
+Thumbs.db

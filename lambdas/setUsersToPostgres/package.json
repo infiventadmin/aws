@@ -1,0 +1,21 @@
+{
+  "name": "set-users",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to insert users into PostgreSQL",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "pg": "^8.11.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {},
+  "author": "Rohit",
+  "license": "MIT"
+}
