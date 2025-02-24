@@ -16,6 +16,7 @@ export const handler = async () => {
 
   try {
     await client.connect();
+    // TEST FUNCTION
     const res = await client.query('SELECT * FROM users');
     return {
       statusCode: 200,

@@ -19,8 +19,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+      - name: Terraform Init
+        run: cd terraform 
+             terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+      - name: Terraform Format
+        run: terraform fmt -check
+
+    # Generates an execution plan for Terraform
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
       - name: Deploy with Terraform
-        run: |
-          cd infrastructure
-          terraform init
-          terraform apply -auto-approve
+        run: terraform apply -auto-approve -input=false
+          

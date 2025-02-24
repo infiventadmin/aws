@@ -1,9 +1,10 @@
 import pkg from 'pg';
 import dotenv from "dotenv";
 dotenv.config();
+
 const { Client } = pkg;
 
-export const handler = async (event) => {
+export const handler = async () => {
   const client = new Client({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -16,12 +17,18 @@ export const handler = async (event) => {
   try {
     await client.connect();
     // TEST FUNCTION
-    await client.query('INSERT INTO users (name, email) VALUES ($1, $2)', ["demoName", "demo@gm.com"]);
-
-    return { statusCode: 201, body: JSON.stringify({ message: "User added!" }) };
+    const res = await client.query('SELECT * FROM users');
+    return {
+      statusCode: 200,
+      body: res.rows,
+      sds: "Events function called"
+    };
   } catch (error) {
-    console.error("Database Error:", error);
-    return { statusCode: 500, body: JSON.stringify({ error: "Failed to insert user." }), sf: error };
+    console.error('DB Connection Error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Database query failed', dg: error }),
+    };
   } finally {
     await client.end();
   }

@@ -39,6 +39,11 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
+variable "security_group_ids" {
+  description = "List of Security Groups for Lambda functions"
+  type        = list(string)
+}
+
 # ---------------- VPC & Security Group for Lambda & RDS ----------------
 resource "aws_security_group" "common_sg" {
   name        = "lambda_rds_sg"
@@ -72,7 +77,7 @@ resource "aws_lambda_function" "get_users" {
 
   vpc_config {
     subnet_ids         = var.subnet_ids  # Uses the updated subnet list
-    security_group_ids = [aws_security_group.common_sg.id]
+    security_group_ids = var.security_group_ids
   }
 }
 
@@ -86,6 +91,20 @@ resource "aws_lambda_function" "set_users" {
 
   vpc_config {
     subnet_ids         = var.subnet_ids
-    security_group_ids = [aws_security_group.common_sg.id]
+    security_group_ids = var.security_group_ids
+  }
+}
+
+resource "aws_lambda_function" "get_events" {
+  function_name = "getAllEvents"
+  s3_bucket     = "infivent-sample-deployment-bucket"
+  s3_key        = "getAllEvents.zip"
+  handler       = "index.handler"
+  runtime       = "nodejs20.x"
+  role          = aws_iam_role.lambda_role.arn
+
+  vpc_config {
+    subnet_ids         = var.subnet_ids
+    security_group_ids = var.security_group_ids
   }
 }

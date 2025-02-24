@@ -1,0 +1,22 @@
+{
+  "name": "get-users",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to get users from PostgreSQL",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0",
+    "pg": "^8.13.3"
+  },
+  "author": "Rohit",
+  "license": "MIT",
+  "devDependencies": {},
+  "keywords": []
+}
