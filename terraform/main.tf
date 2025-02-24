@@ -5,6 +5,10 @@ provider "aws" {
 # ---------------- S3 Bucket for Lambda Deployment ----------------
 resource "aws_s3_bucket" "lambda_bucket" {
   bucket = var.s3_bucket
+  
+  lifecycle {
+    ignore_changes = [bucket]
+  }
 }
 
 # ---------------- IAM Role for Lambda Execution ----------------
@@ -21,6 +25,10 @@ resource "aws_iam_role" "lambda_role" {
       }
     }]
   })
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 resource "aws_iam_policy_attachment" "lambda_vpc_access" {
@@ -48,17 +56,19 @@ variable "security_group_ids" {
 resource "aws_security_group" "common_sg" {
   name        = "lambda_rds_sg"
   description = "Allow Lambda to access RDS"
-  vpc_id      = var.vpc_id  # Use your VPC ID
+  vpc_id      = var.vpc_id
 
-  # Allow PostgreSQL Access (Lambda -> RDS)
+  lifecycle {
+    ignore_changes = [name]
+  }
+
   ingress {
     from_port   = 5432
     to_port     = 5432
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Restrict this for security
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Allow Lambda to make outbound connections
   egress {
     from_port   = 0
     to_port     = 0
